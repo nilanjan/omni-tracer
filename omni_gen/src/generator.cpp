@@ -1,6 +1,6 @@
 #include "generator.hpp"
 
-namespace {
+namespace ns_omni_gen {
 Generator::Generator() 
 {}
 

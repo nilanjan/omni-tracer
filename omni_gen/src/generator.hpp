@@ -3,12 +3,12 @@
 #include <list>
 
 namespace ns_omni_gen {
-class Genarator {
+class Generator {
 private:
 
 public:
-	Genarator();
-	virtual ~Genarator() {}
+	Generator();
+	virtual ~Generator() {}
 
 	void Put(std::list<std::string>& fn_info) {
 		//

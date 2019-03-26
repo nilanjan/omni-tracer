@@ -16,33 +16,70 @@
  * SOFTWARE.
  */
 
-#include "common.hpp"
+#pragma once
+
+//
+// C++ basic headers including STL
+// This code uses C++11
+//
+#include <iostream>
+#include <vector>
+#include <list>
+#include <map>
+#include <cassert>
+#include <string>
+#include <cstring>
+#include <memory>
+#include <fstream>
+
+//
+// Tracing related
+//
+#include <sys/ptrace.h>
+#include <sys/types.h>
+#include <dirent.h>
+
+namespace ns_omni_tracer {
+enum class Status {
+    eSuccess,
+    eFailure,
+    eBusy,
+    eIdle,
+    eDone,
+    eUnkown,
+    eCount
+};
+
+class OmniTracer {
+private:
+public:
+    virtual ~OmniTracer();
+    virtual Status GetStatus() = 0;
+};
+
+typedef std::shared_ptr<OmniTracer> PtrOmniTracer;
+
+}
 
 namespace ns_omni_gen {
-class Generator : public ns_omni_tracer::OmniTracer {
-private:
-    std::list<std::string>                          l_call_;
-    std::shared_ptr<std::ofstream>                  o_fstrm_;
-    ns_omni_tracer::Status                          e_status_;
-    ns_omni_tracer::PtrOmniTracer                   p_client_;
+inline void omni_err(const std::string& msg)
+{
+    std::cerr<<__FILE__<<" "<<__FUNCTION__<<" "<<msg<<std::endl;
+}
 
-    void SetStatus_();
+inline void omni_msg(const std::string& msg)
+{
+    std::cout<<__FILE__<<" "<<__FUNCTION__<<" "<<msg<<std::endl;
+}
 
-public:
-    Generator(ns_omni_tracer::PtrOmniTracer client);
-    virtual ~Generator();
+inline void omni_assert(bool cond, const std::string& msg) {
+    if(cond == false)
+        omni_err(msg);
 
-    ///
-    /// \brief Write - Write the string to internal list
-    /// Optionally print to screen, default dump to a [.trx] file
-    /// \param fn_info
-    ///
-    ///
-    void Write(std::string& fn_info, bool to_console=false);
+    assert(cond);
+}
 
-    ns_omni_tracer::Status GetStatus() { return e_status_; }
 
-};
 
 }
 

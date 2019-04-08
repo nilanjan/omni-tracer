@@ -31,6 +31,7 @@
 #include <cstring>
 #include <memory>
 #include <fstream>
+#include <sstream>
 
 //
 // Tracing related
@@ -79,7 +80,7 @@ inline void omni_assert(bool cond, const std::string& msg) {
     assert(cond);
 }
 
-
-
 }
+
+
 

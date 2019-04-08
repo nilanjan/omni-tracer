@@ -16,6 +16,8 @@
  * SOFTWARE.
  */
 
+#pragma once
+
 #include "common.hpp"
 
 namespace ns_omni_gen {
